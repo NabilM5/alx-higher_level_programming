@@ -1,65 +1,41 @@
 #!/usr/bin/python3
-"""Module matrix_mul
-Multiplies two matrices and returns the result.
+"""
+Module matrix_divided
+Divides each element of a matrix of numbers by a number
 """
 
 
-def matrix_mul(m_a, m_b):
-    """Return the matrix resulting of
-    the multiplication of m_a and m_b."""
+def matrix_divided(matrix, div):
+    """Returns a new matrix (list of list)
+    with the result of the division of matrix by div
+    rounded to 2 decimal places.
+    """
 
-    if type(m_a) is not list:
-        raise TypeError("m_a must be a list")
-    if type(m_b) is not list:
-        raise TypeError("m_b must be a list")
+    if not isinstance(matrix, list) or len(matrix) == 0 or not matrix[0]:
+        raise TypeError("matrix must be a matrix (list of lists) " +
+                        "of integers/floats")
 
-    for x in m_a:
-        if type(x) is not list:
-            raise TypeError("m_a must be a list of lists")
-    for x in m_b:
-        if type(x) is not list:
-            raise TypeError("m_b must be a list of lists")
-
-    if m_a == [] or m_a == [[]]:
-        raise ValueError("m_a can't be empty")
-    if m_b == [] or m_b == [[]]:
-        raise ValueError("m_b can't be empty")
-
-    for row in m_a:
+    for row in matrix:
+        if len(row) == 0:
+            raise TypeError("matrix must be a matrix (list of lists) " +
+                            "of integers/floats")
         for x in row:
             if type(x) is not int and type(x) is not float:
-                raise TypeError("m_a should contain only integers or floats")
-    for row in m_b:
-        for x in row:
-            if type(x) is not int and type(x) is not float:
-                raise TypeError("m_b should contain only integers or floats")
+                raise TypeError("matrix must be a matrix (list of lists) " +
+                                "of integers/floats")
 
-    row_len = []
-    for row in m_a:
-        row_len.append(len(row))
-    if not all(elem == row_len[0] for elem in row_len):
-            raise TypeError("each row of m_a must should be of the same size")
-    row_len = []
-    for row in m_b:
-        row_len.append(len(row))
-    if not all(elem == row_len[0] for elem in row_len):
-            raise TypeError("each row of m_b must should be of the same size")
+    len_rows = []
+    for row in matrix:
+        len_rows.append(len(row))
+    if not all(elem == len_rows[0] for elem in len_rows):
+        raise TypeError("Each row of the matrix must have the same size")
 
-    a_col = 0
-    for col in m_a[0]:
-        a_col += 1
-    b_row = 0
-    for row in m_b:
-        b_row += 1
+    if type(div) is not int and type(div) is not float:
+        raise TypeError("div must be a number")
 
-    if a_col != b_row:
-        raise ValueError("m_a and m_b can't be multiplied")
+    if div == 0:
+        raise ZeroDivisionError("division by zero")
 
-    result = [[0 for x in range(len(m_b[0]))] for y in range(len(m_a))]
+    new_matrix = [[round(x / div, 2) for x in row] for row in matrix]
 
-    for i in range(len(m_a)):
-        for j in range(len(m_b[0])):
-            for k in range(len(m_b)):
-                result[i][j] += m_a[i][k] * m_b[k][j]
-
-    return result
+    return new_matrix
