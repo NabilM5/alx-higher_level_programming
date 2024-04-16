@@ -1,21 +1,19 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-
-import sys
-save_to_json_file = __import__('7-save_to_json_file').save_to_json_file
-load_from_json_file = __import__('8-load_from_json_file').load_from_json_file
+import json
 
 
-try:
-    new_list = load_from_json_file('add_item.json')
-except:
-    new_list = []
+def save_to_json_file(my_obj, filename):
+    """
+    Save object to a file
 
-for i in range(1, len(sys.argv)):
-    new_list.append(sys.argv[i])
+    Arguments:
+        my_obj (obj): The inputed object to convert in json format
+        filename (str): The name of the output file
 
-try:
-    save_to_json_file(new_list, 'add_item.json')
-except:
-    pass
+    Return:
+        A file with a text in jason format
+    """
+    with open(filename, 'w', encoding='utf-8') as file:
+        return file.write(json.dumps(my_obj))
