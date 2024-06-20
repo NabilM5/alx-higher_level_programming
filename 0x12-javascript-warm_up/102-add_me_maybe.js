@@ -1,7 +1,4 @@
 #!/usr/bin/node
-// Executes theFunction 'x' times
-exports.callMeMoby = function (x, theFunction) {
-  while (x-- > 0) {
-    theFunction();
-  }
+exports.addMeMaybe = function (number, theFunction) {
+  theFunction(number + 1);
 };
